@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import Image from 'next/image';
 
 const uploadSchema = z.object({
   title: z.string().min(1, 'Başlık gerekli').max(100, 'Başlık çok uzun'),
@@ -146,9 +147,11 @@ export default function UploadPage() {
                 Önizleme
               </label>
               <div className="border border-gray-300 rounded-lg p-4 bg-gray-50">
-                <img
+                <Image
                   src={previewUrl}
                   alt="Logo önizleme"
+                  width={400}
+                  height={256}
                   className="max-w-full h-auto max-h-64 mx-auto object-contain"
                 />
               </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 interface Logo {
   _id: string;
@@ -125,10 +126,12 @@ export default function TrendingPage() {
                 </svg>
               </button>
               <div className="relative h-48 bg-gray-100">
-                <img
+                <Image
                   src={logo.imageUrl}
                   alt={logo.title}
-                  className="w-full h-full object-contain"
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
               <div className="p-4">

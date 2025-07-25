@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 
@@ -26,11 +26,7 @@ export default function LogoDetailPage() {
   const [voting, setVoting] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
-  useEffect(() => {
-    fetchLogo();
-  }, [logoId]);
-
-  const fetchLogo = async () => {
+  const fetchLogo = useCallback(async () => {
     try {
       const response = await fetch(`/api/logos/${logoId}`);
       const data = await response.json();
@@ -45,7 +41,11 @@ export default function LogoDetailPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [logoId]);
+
+  useEffect(() => {
+    fetchLogo();
+  }, [fetchLogo]);
 
   const handleVote = async (rating: number) => {
     setVoting(true);
