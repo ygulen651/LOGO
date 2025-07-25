@@ -9,6 +9,9 @@ import Image from 'next/image';
 
 const uploadSchema = z.object({
   title: z.string().min(1, 'Başlık gerekli').max(100, 'Başlık çok uzun'),
+  consent: z.boolean().refine((val) => val === true, {
+    message: 'Logo yüklemek için izin onayı gerekli',
+  }),
 });
 
 type UploadFormData = z.infer<typeof uploadSchema>;
@@ -19,6 +22,7 @@ export default function UploadPage() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [consent, setConsent] = useState(false);
 
   const {
     register,
@@ -55,6 +59,11 @@ export default function UploadPage() {
       return;
     }
 
+    if (!consent) {
+      setError('Logo yüklemek için izin onayı gerekli');
+      return;
+    }
+
     setUploading(true);
     setError(null);
 
@@ -71,6 +80,8 @@ export default function UploadPage() {
       const result = await response.json();
 
       if (response.ok) {
+        // Başarı mesajı göster
+        alert('Teşekkürler! Tasarımınız sergilenmek üzere başarıyla yüklendi. Yayından kaldırmak isterseniz bizimle iletişime geçebilirsiniz.');
         router.push(`/logo/${result._id}`);
       } else {
         setError(result.error || 'Logo yüklenirken hata oluştu');
@@ -158,6 +169,22 @@ export default function UploadPage() {
             </div>
           )}
 
+          {/* İzin Onayı */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="flex items-start space-x-3">
+              <input
+                type="checkbox"
+                id="consent"
+                checked={consent}
+                onChange={(e) => setConsent(e.target.checked)}
+                className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+              <label htmlFor="consent" className="text-sm text-gray-700 leading-relaxed">
+                <span className="font-medium text-blue-900">İzin Onayı:</span> Bu tasarımın web sitesinde sergilenmesine ve herkese açık şekilde görüntülenmesine izin veriyorum. Yayından kaldırmak isterseniz bizimle iletişime geçebilirsiniz.
+              </label>
+            </div>
+          </div>
+
           {/* Hata Mesajı */}
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-4">
@@ -168,7 +195,7 @@ export default function UploadPage() {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={uploading || !selectedFile}
+            disabled={uploading || !selectedFile || !consent}
             className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
           >
             {uploading ? 'Yükleniyor...' : 'Logo Yükle'}
