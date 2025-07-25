@@ -84,14 +84,32 @@ export default function UploadPage() {
       formData.append('file', selectedFile);
 
       console.log('FormData hazırlandı, API çağrısı yapılıyor...');
+      console.log('Dosya boyutu:', selectedFile.size, 'bytes');
+      console.log('Form verileri:', {
+        title: data.title,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone
+      });
+      
       const response = await fetch('/api/logos', {
         method: 'POST',
         body: formData,
       });
 
-      console.log('API yanıtı alındı:', response.status);
-      const result = await response.json();
-      console.log('API sonucu:', result);
+      console.log('API yanıtı alındı:', response.status, response.statusText);
+      
+      let result;
+      try {
+        result = await response.json();
+        console.log('API sonucu:', result);
+      } catch (jsonError) {
+        console.error('JSON parse hatası:', jsonError);
+        const textResult = await response.text();
+        console.log('Raw response:', textResult);
+        throw new Error('Sunucu yanıtı işlenemedi');
+      }
 
       if (response.ok) {
         console.log('Başarılı! Logo yüklendi');
@@ -106,7 +124,11 @@ export default function UploadPage() {
       }
     } catch (error) {
       console.error('Upload error:', error);
-      setError('Logo yüklenirken hata oluştu');
+      if (error instanceof Error) {
+        setError(`Logo yüklenirken hata oluştu: ${error.message}`);
+      } else {
+        setError('Logo yüklenirken hata oluştu');
+      }
     } finally {
       setUploading(false);
     }
@@ -293,6 +315,22 @@ export default function UploadPage() {
             className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
           >
             {uploading ? 'Yükleniyor...' : 'Logo Yükle'}
+          </button>
+
+          {/* Test Button */}
+          <button
+            type="button"
+            onClick={() => {
+              console.log('Test butonu tıklandı');
+              console.log('Form durumu:', {
+                selectedFile: !!selectedFile,
+                consent,
+                uploading
+              });
+            }}
+            className="w-full bg-green-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+          >
+            Test Butonu (Console&apos;u Kontrol Edin)
           </button>
         </form>
       </div>
