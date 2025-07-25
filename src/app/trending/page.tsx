@@ -11,6 +11,8 @@ interface Logo {
   height: number;
   totalVotes: number;
   averageRating: number;
+  firstName: string;
+  lastName: string;
   createdAt: string;
 }
 
@@ -135,9 +137,12 @@ export default function TrendingPage() {
                 />
               </div>
               <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2 truncate">
+                <h3 className="text-lg font-semibold text-gray-900 mb-1 truncate">
                   {logo.title}
                 </h3>
+                <p className="text-sm text-gray-600 mb-2">
+                  Tasarımcı: <span className="font-medium text-blue-600">{logo.firstName} {logo.lastName}</span>
+                </p>
                 
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center space-x-1">

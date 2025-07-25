@@ -11,6 +11,8 @@ interface Logo {
   height: number;
   totalVotes: number;
   averageRating: number;
+  firstName: string;
+  lastName: string;
   createdAt: string;
 }
 
