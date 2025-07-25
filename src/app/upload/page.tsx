@@ -92,9 +92,12 @@ export default function UploadPage() {
         alert('Teşekkürler! Tasarımınız sergilenmek üzere başarıyla yüklendi. Yayından kaldırmak isterseniz bizimle iletişime geçebilirsiniz.');
         router.push(`/logo/${result._id}`);
       } else {
-        setError(result.error || 'Logo yüklenirken hata oluştu');
+        const errorMessage = result.error || 'Logo yüklenirken hata oluştu';
+        const details = result.details ? ` (${result.details})` : '';
+        setError(errorMessage + details);
       }
-    } catch {
+    } catch (error) {
+      console.error('Upload error:', error);
       setError('Logo yüklenirken hata oluştu');
     } finally {
       setUploading(false);

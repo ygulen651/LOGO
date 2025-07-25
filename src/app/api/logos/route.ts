@@ -57,7 +57,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(logo);
   } catch (error) {
     console.error('Logo yükleme hatası:', error);
-    return NextResponse.json({ error: 'Logo yüklenirken hata oluştu' }, { status: 500 });
+    return NextResponse.json({ 
+      error: 'Logo yüklenirken hata oluştu',
+      details: error instanceof Error ? error.message : 'Bilinmeyen hata'
+    }, { status: 500 });
   }
 }
 
