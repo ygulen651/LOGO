@@ -11,7 +11,6 @@ export async function GET(request: NextRequest) {
 
     // En çok oy alan logoları getir
     const trendingLogos = await Logo.find()
-      .populate('creator', 'name email image')
       .sort({ totalVotes: -1, averageRating: -1 })
       .limit(limit);
 

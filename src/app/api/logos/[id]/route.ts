@@ -4,12 +4,13 @@ import Logo from '@/lib/models/Logo';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
+    const { id } = await params;
 
-    const logo = await Logo.findById(params.id).populate('creator', 'name email image');
+    const logo = await Logo.findById(id);
 
     if (!logo) {
       return NextResponse.json({ error: 'Logo bulunamadı' }, { status: 404 });

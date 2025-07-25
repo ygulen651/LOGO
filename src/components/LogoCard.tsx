@@ -9,11 +9,6 @@ interface Logo {
   imageUrl: string;
   width: number;
   height: number;
-  creator: {
-    name: string;
-    email: string;
-    image?: string;
-  };
   totalVotes: number;
   averageRating: number;
   createdAt: string;
@@ -73,44 +68,51 @@ export function LogoCard({ logo }: LogoCardProps) {
 
   return (
     <Link href={`/logo/${logo._id}`}>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-        <div className="relative h-48 bg-gray-100">
+      <div className="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100">
+        <div className="relative h-56 bg-gradient-to-br from-blue-50 to-purple-50 p-4">
           <Image
             src={logo.imageUrl}
             alt={logo.title}
             fill
-            className="object-contain"
+            className="object-contain group-hover:scale-105 transition-transform duration-300"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
+          {/* Hover overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
-        <div className="p-4">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2 truncate">
+        <div className="p-6">
+          <h3 className="text-xl font-bold text-gray-900 mb-3 truncate font-playfair group-hover:text-blue-600 transition-colors duration-300">
             {logo.title}
           </h3>
           
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-1">
               {renderStars(logo.averageRating)}
+              <span className="ml-2 text-sm font-semibold text-gray-700">
+                {logo.averageRating.toFixed(1)}
+              </span>
             </div>
-            <span className="text-sm text-gray-600">
-              {logo.totalVotes} oy
-            </span>
+            <div className="flex items-center space-x-1 text-blue-600 font-medium">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="text-sm">{logo.totalVotes} oy</span>
+            </div>
           </div>
 
-          <div className="flex items-center justify-between text-sm text-gray-500">
-            <div className="flex items-center space-x-2">
-              {logo.creator.image && (
-                <Image
-                  src={logo.creator.image}
-                  alt={logo.creator.name}
-                  width={20}
-                  height={20}
-                  className="rounded-full"
-                />
-              )}
-              <span>{logo.creator.name}</span>
+          <div className="flex items-center justify-between text-sm text-gray-500 font-inter">
+            <span className="flex items-center space-x-1">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>{formatDate(logo.createdAt)}</span>
+            </span>
+            <div className="flex items-center space-x-1 text-purple-600">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+              <span className="text-xs font-medium">Detay</span>
             </div>
-            <span>{formatDate(logo.createdAt)}</span>
           </div>
         </div>
       </div>

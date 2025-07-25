@@ -9,11 +9,6 @@ interface Logo {
   imageUrl: string;
   width: number;
   height: number;
-  creator: {
-    name: string;
-    email: string;
-    image?: string;
-  };
   totalVotes: number;
   averageRating: number;
   createdAt: string;
@@ -49,8 +44,8 @@ export default function TrendingPage() {
     return (
       <div className="space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Trend Logolar</h1>
-          <p className="text-xl text-gray-600">En popüler logoları keşfedin</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">TREND LOGOLAR</h1>
+          <p className="text-xl text-gray-600">EN POPÜLER LOGOLARI KEŞFEDİN</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(12)].map((_, i) => (
@@ -77,8 +72,8 @@ export default function TrendingPage() {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Trend Logolar</h1>
-        <p className="text-xl text-gray-600">En popüler logoları keşfedin</p>
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">TREND LOGOLAR</h1>
+        <p className="text-xl text-gray-600">EN POPÜLER LOGOLARI KEŞFEDİN</p>
       </div>
 
       {logos.length === 0 ? (
@@ -123,16 +118,6 @@ export default function TrendingPage() {
                 </div>
 
                 <div className="flex items-center justify-between text-sm text-gray-500">
-                  <div className="flex items-center space-x-2">
-                    {logo.creator.image && (
-                      <img
-                        src={logo.creator.image}
-                        alt={logo.creator.name}
-                        className="w-5 h-5 rounded-full"
-                      />
-                    )}
-                    <span>{logo.creator.name}</span>
-                  </div>
                   <span>{new Date(logo.createdAt).toLocaleDateString('tr-TR')}</span>
                 </div>
               </div>

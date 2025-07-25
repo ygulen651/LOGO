@@ -5,7 +5,6 @@ export interface ILogo extends Document {
   imageUrl: string;
   width: number;
   height: number;
-  creator: mongoose.Types.ObjectId;
   totalVotes: number;
   averageRating: number;
   createdAt: Date;
@@ -28,11 +27,6 @@ const LogoSchema: Schema = new Schema({
   },
   height: {
     type: Number,
-    required: true,
-  },
-  creator: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
     required: true,
   },
   totalVotes: {

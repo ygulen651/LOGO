@@ -1,18 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import connectDB from '@/lib/mongodb';
 import Logo from '@/lib/models/Logo';
 import cloudinary from '@/lib/cloudinary';
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Oturum açmanız gerekiyor' }, { status: 401 });
-    }
-
     const formData = await request.formData();
     const title = formData.get('title') as string;
     const file = formData.get('file') as File;
@@ -30,7 +22,6 @@ export async function POST(request: NextRequest) {
       cloudinary.uploader.upload_stream(
         {
           resource_type: 'image',
-          folder: 'logos',
         },
         (error, result) => {
           if (error) reject(error);
@@ -46,7 +37,6 @@ export async function POST(request: NextRequest) {
       imageUrl: result.secure_url,
       width: result.width,
       height: result.height,
-      creator: session.user.id,
     });
 
     return NextResponse.json(logo);
@@ -70,7 +60,6 @@ export async function GET(request: NextRequest) {
     const sortOrder = order === 'desc' ? -1 : 1;
 
     const logos = await Logo.find()
-      .populate('creator', 'name email image')
       .sort({ [sort]: sortOrder })
       .skip(skip)
       .limit(limit);

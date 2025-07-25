@@ -10,11 +10,6 @@ interface Logo {
   imageUrl: string;
   width: number;
   height: number;
-  creator: {
-    name: string;
-    email: string;
-    image?: string;
-  };
   totalVotes: number;
   averageRating: number;
   createdAt: string;

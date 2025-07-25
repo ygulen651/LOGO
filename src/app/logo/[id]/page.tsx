@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 
@@ -11,18 +10,12 @@ interface Logo {
   imageUrl: string;
   width: number;
   height: number;
-  creator: {
-    name: string;
-    email: string;
-    image?: string;
-  };
   totalVotes: number;
   averageRating: number;
   createdAt: string;
 }
 
 export default function LogoDetailPage() {
-  const { data: session } = useSession();
   const params = useParams();
   const logoId = params.id as string;
   
@@ -34,10 +27,7 @@ export default function LogoDetailPage() {
 
   useEffect(() => {
     fetchLogo();
-    if (session) {
-      fetchUserVote();
-    }
-  }, [logoId, session]);
+  }, [logoId]);
 
   const fetchLogo = async () => {
     try {
@@ -56,25 +46,7 @@ export default function LogoDetailPage() {
     }
   };
 
-  const fetchUserVote = async () => {
-    try {
-      const response = await fetch(`/api/logos/${logoId}/vote`);
-      const data = await response.json();
-      
-      if (response.ok) {
-        setUserRating(data.rating);
-      }
-    } catch (err) {
-      console.error('Kullanıcı oyu alınamadı:', err);
-    }
-  };
-
   const handleVote = async (rating: number) => {
-    if (!session) {
-      alert('Oy vermek için giriş yapmanız gerekiyor');
-      return;
-    }
-
     setVoting(true);
     try {
       const response = await fetch(`/api/logos/${logoId}/vote`, {
@@ -165,18 +137,6 @@ export default function LogoDetailPage() {
               <h1 className="text-3xl font-bold text-gray-900 mb-4">{logo.title}</h1>
               
               <div className="flex items-center space-x-4 mb-6">
-                <div className="flex items-center space-x-2">
-                  {logo.creator.image && (
-                    <Image
-                      src={logo.creator.image}
-                      alt={logo.creator.name}
-                      width={32}
-                      height={32}
-                      className="rounded-full"
-                    />
-                  )}
-                  <span className="text-gray-700">by {logo.creator.name}</span>
-                </div>
                 <span className="text-gray-500">
                   {new Date(logo.createdAt).toLocaleDateString('tr-TR', {
                     year: 'numeric',
@@ -214,31 +174,17 @@ export default function LogoDetailPage() {
                   {logo.totalVotes} kişi oy verdi
                 </p>
 
-                {session ? (
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-3">Sizin Oyunuz</h4>
-                    <div className="flex items-center space-x-1 mb-4">
-                      {renderStars(userRating || 0, true, handleVote)}
-                    </div>
-                    {userRating && (
-                      <p className="text-sm text-green-600">
-                        {userRating} yıldız verdiniz
-                      </p>
-                    )}
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-3">Sizin Oyunuz</h4>
+                  <div className="flex items-center space-x-1 mb-4">
+                    {renderStars(userRating || 0, true, handleVote)}
                   </div>
-                ) : (
-                  <div className="text-center">
-                    <p className="text-sm text-gray-600 mb-3">
-                      Oy vermek için giriş yapın
+                  {userRating && (
+                    <p className="text-sm text-green-600">
+                      {userRating} yıldız verdiniz
                     </p>
-                    <button
-                      onClick={() => window.location.href = '/auth/signin'}
-                      className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-                    >
-                      Giriş Yap
-                    </button>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           </div>
