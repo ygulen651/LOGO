@@ -8,10 +8,14 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { rating } = await request.json();
+    const { rating, sessionId } = await request.json();
     
     if (!rating || rating < 1 || rating > 5) {
       return NextResponse.json({ error: 'Geçerli bir puan gerekli (1-5)' }, { status: 400 });
+    }
+
+    if (!sessionId) {
+      return NextResponse.json({ error: 'Session ID gerekli' }, { status: 400 });
     }
 
     await connectDB();
@@ -23,15 +27,10 @@ export async function POST(
       return NextResponse.json({ error: 'Logo bulunamadı' }, { status: 404 });
     }
 
-    // Kullanıcı kimliğini al (IP adresi veya session token)
-    const userIdentifier = request.headers.get('x-forwarded-for') || 
-                          request.headers.get('x-real-ip') || 
-                          'unknown';
-
     // Kullanıcının daha önce bu logoya oy verip vermediğini kontrol et
     const existingVote = await Vote.findOne({ 
       logo: id, 
-      user: userIdentifier 
+      user: sessionId 
     });
 
     if (existingVote) {
@@ -43,7 +42,7 @@ export async function POST(
     // Yeni oy oluştur
     await Vote.create({
       logo: id,
-      user: userIdentifier,
+      user: sessionId,
       rating,
     });
 

@@ -26,6 +26,19 @@ export default function LogoDetailPage() {
   const [voting, setVoting] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
+  // Session ID oluştur veya mevcut olanı al
+  const getSessionId = () => {
+    if (typeof window !== 'undefined') {
+      let sessionId = localStorage.getItem('voteSessionId');
+      if (!sessionId) {
+        sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('voteSessionId', sessionId);
+      }
+      return sessionId;
+    }
+    return 'unknown';
+  };
+
   const fetchLogo = useCallback(async () => {
     try {
       const response = await fetch(`/api/logos/${logoId}`);
@@ -50,12 +63,13 @@ export default function LogoDetailPage() {
   const handleVote = async (rating: number) => {
     setVoting(true);
     try {
+      const sessionId = getSessionId();
       const response = await fetch(`/api/logos/${logoId}/vote`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ rating }),
+        body: JSON.stringify({ rating, sessionId }),
       });
 
       const data = await response.json();
