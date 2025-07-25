@@ -23,9 +23,27 @@ export async function POST(
       return NextResponse.json({ error: 'Logo bulunamadı' }, { status: 404 });
     }
 
+    // Kullanıcı kimliğini al (IP adresi veya session token)
+    const userIdentifier = request.headers.get('x-forwarded-for') || 
+                          request.headers.get('x-real-ip') || 
+                          'unknown';
+
+    // Kullanıcının daha önce bu logoya oy verip vermediğini kontrol et
+    const existingVote = await Vote.findOne({ 
+      logo: id, 
+      user: userIdentifier 
+    });
+
+    if (existingVote) {
+      return NextResponse.json({ 
+        error: 'Bu logoya zaten oy verdiniz. Her kullanıcı sadece bir kez oy verebilir.' 
+      }, { status: 400 });
+    }
+
     // Yeni oy oluştur
     await Vote.create({
       logo: id,
+      user: userIdentifier,
       rating,
     });
 

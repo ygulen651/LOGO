@@ -69,10 +69,14 @@ export default function LogoDetailPage() {
             totalVotes: data.totalVotes,
           });
         }
+        // Başarılı oy verme mesajı
+        alert(`Başarıyla ${rating} yıldız verdiniz!`);
       } else {
+        // Hata mesajını göster
         alert(data.error || 'Oy verirken hata oluştu');
       }
-    } catch {
+    } catch (error) {
+      console.error('Oy verme hatası:', error);
       alert('Oy verirken hata oluştu');
     } finally {
       setVoting(false);
