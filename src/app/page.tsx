@@ -23,8 +23,9 @@ export default function Home() {
             <span className="text-gray-800">Logosunu Seçiyor</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto font-inter leading-relaxed">
-            Karaman&apos;ın en güzel logolarını yükleyin, topluluktan oy alın ve 
-            <span className="text-blue-600 font-semibold"> EN POPÜLER TASARIMLARI</span> keşfedin.
+            Şehrimizi en iyi yansıtan turizm logosunu birlikte seçiyoruz!
+            <br />
+            <span className="text-blue-600 font-semibold">Yaratıcılığına güveniyorsan, kültürel mirasımızı ve doğal güzelliklerimizi yansıtan bir logo tasarla, yarışmamıza katıl!</span>
           </p>
         </div>
       </div>
