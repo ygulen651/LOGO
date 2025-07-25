@@ -2,10 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Logo from '@/lib/models/Logo';
 import cloudinary from '@/lib/cloudinary';
-import { trackApiPerformance } from '@/lib/apiRating';
 
 export async function POST(request: NextRequest) {
-  const startTime = Date.now();
   
   try {
     const formData = await request.formData();
@@ -52,14 +50,10 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Logo yükleme hatası:', error);
     return NextResponse.json({ error: 'Logo yüklenirken hata oluştu' }, { status: 500 });
-  } finally {
-    // API performansını takip et
-    await trackApiPerformance(request, 'logo-upload', '/api/logos', 'POST', startTime);
   }
 }
 
 export async function GET(request: NextRequest) {
-  const startTime = Date.now();
   
   try {
     await connectDB();
@@ -92,8 +86,5 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Logo listesi hatası:', error);
     return NextResponse.json({ error: 'Logolar yüklenirken hata oluştu' }, { status: 500 });
-  } finally {
-    // API performansını takip et
-    await trackApiPerformance(request, 'logo-list', '/api/logos', 'GET', startTime);
   }
 } 
