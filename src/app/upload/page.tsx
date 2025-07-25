@@ -321,42 +321,7 @@ export default function UploadPage() {
             {uploading ? 'Yükleniyor...' : 'Logo Yükle'}
           </button>
 
-          {/* Test Button */}
-          <button
-            type="button"
-            onClick={() => {
-              console.log('Test butonu tıklandı');
-              console.log('Form durumu:', {
-                selectedFile: !!selectedFile,
-                consent,
-                uploading
-              });
-            }}
-            className="w-full bg-green-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-700 transition-colors"
-          >
-            Test Butonu (Console&apos;u Kontrol Edin)
-          </button>
 
-          {/* Direct Submit Button */}
-          <button
-            type="button"
-            onClick={() => {
-              console.log('Direct submit butonu tıklandı');
-              if (selectedFile && consent) {
-                console.log('Form submit başlatılıyor...');
-                // Form submit'i manuel olarak tetikle
-                const form = document.querySelector('form');
-                if (form) {
-                  form.dispatchEvent(new Event('submit', { bubbles: true }));
-                }
-              } else {
-                console.log('Dosya veya consent eksik');
-              }
-            }}
-            className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
-          >
-            Direct Submit Test
-          </button>
         </form>
       </div>
     </div>
