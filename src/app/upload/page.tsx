@@ -58,6 +58,8 @@ export default function UploadPage() {
   };
 
   const onSubmit = async (data: UploadFormData) => {
+    console.log('Form submit başladı', { data, selectedFile, consent });
+    
     if (!selectedFile) {
       setError('Lütfen bir logo dosyası seçin');
       return;
@@ -72,6 +74,7 @@ export default function UploadPage() {
     setError(null);
 
     try {
+      console.log('API çağrısı başlıyor...');
       const formData = new FormData();
       formData.append('title', data.title);
       formData.append('firstName', data.firstName);
@@ -80,18 +83,23 @@ export default function UploadPage() {
       formData.append('phone', data.phone);
       formData.append('file', selectedFile);
 
+      console.log('FormData hazırlandı, API çağrısı yapılıyor...');
       const response = await fetch('/api/logos', {
         method: 'POST',
         body: formData,
       });
 
+      console.log('API yanıtı alındı:', response.status);
       const result = await response.json();
+      console.log('API sonucu:', result);
 
       if (response.ok) {
+        console.log('Başarılı! Logo yüklendi');
         // Başarı mesajı göster
         alert('Teşekkürler! Tasarımınız sergilenmek üzere başarıyla yüklendi. Yayından kaldırmak isterseniz bizimle iletişime geçebilirsiniz.');
         router.push(`/logo/${result._id}`);
       } else {
+        console.log('API hatası:', result);
         const errorMessage = result.error || 'Logo yüklenirken hata oluştu';
         const details = result.details ? ` (${result.details})` : '';
         setError(errorMessage + details);
