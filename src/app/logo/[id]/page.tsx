@@ -25,6 +25,7 @@ export default function LogoDetailPage() {
   const [userRating, setUserRating] = useState<number | null>(null);
   const [voting, setVoting] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [hasVoted, setHasVoted] = useState(false);
 
   // Session ID oluştur veya mevcut olanı al
   const getSessionId = () => {
@@ -37,6 +38,29 @@ export default function LogoDetailPage() {
       return sessionId;
     }
     return 'unknown';
+  };
+
+  // Kullanıcının bu logoya oy verip vermediğini kontrol et
+  const checkVoteStatus = () => {
+    if (typeof window !== 'undefined') {
+      const votedLogos = JSON.parse(localStorage.getItem('votedLogos') || '[]');
+      const hasVotedForThisLogo = votedLogos.includes(logoId);
+      setHasVoted(hasVotedForThisLogo);
+      return hasVotedForThisLogo;
+    }
+    return false;
+  };
+
+  // Oy verilen logoyu localStorage'a kaydet
+  const markAsVoted = () => {
+    if (typeof window !== 'undefined') {
+      const votedLogos = JSON.parse(localStorage.getItem('votedLogos') || '[]');
+      if (!votedLogos.includes(logoId)) {
+        votedLogos.push(logoId);
+        localStorage.setItem('votedLogos', JSON.stringify(votedLogos));
+      }
+      setHasVoted(true);
+    }
   };
 
   const fetchLogo = useCallback(async () => {
@@ -58,6 +82,7 @@ export default function LogoDetailPage() {
 
   useEffect(() => {
     fetchLogo();
+    checkVoteStatus(); // Sayfa yüklendiğinde oy durumunu kontrol et
   }, [fetchLogo]);
 
   const handleVote = async (rating: number) => {
@@ -85,6 +110,7 @@ export default function LogoDetailPage() {
         }
         // Başarılı oy verme mesajı
         alert(`Başarıyla ${rating} yıldız verdiniz!`);
+        markAsVoted(); // Oy verildikten sonra butonları devre dışı bırak
       } else {
         // Hata mesajını göster
         alert(data.error || 'Oy verirken hata oluştu');
@@ -102,7 +128,7 @@ export default function LogoDetailPage() {
       <button
         key={i}
         onClick={() => interactive && onStarClick && onStarClick(i + 1)}
-        disabled={!interactive || voting}
+        disabled={!interactive || voting || hasVoted} // Oy verilmişse devre dışı
         className={`w-8 h-8 ${
           interactive ? 'cursor-pointer hover:scale-110 transition-transform' : ''
         } ${
@@ -251,13 +277,34 @@ export default function LogoDetailPage() {
 
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-3">Sizin Oyunuz</h4>
-                  <div className="flex items-center space-x-1 mb-4">
-                    {renderStars(userRating || 0, true, handleVote)}
-                  </div>
-                  {userRating && (
-                    <p className="text-sm text-green-600">
-                      {userRating} yıldız verdiniz
-                    </p>
+                  {hasVoted ? (
+                    <div className="mb-4">
+                      <p className="text-sm text-red-600 font-medium mb-2">
+                        ⚠️ Bu logoya zaten oy verdiniz!
+                      </p>
+                      <div className="flex items-center space-x-1">
+                        {renderStars(userRating || 0, false)}
+                      </div>
+                      {userRating && (
+                        <p className="text-sm text-green-600 mt-2">
+                          {userRating} yıldız verdiniz
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="mb-4">
+                      <p className="text-sm text-blue-600 mb-2">
+                        Oy vermek için yıldızlara tıklayın
+                      </p>
+                      <div className="flex items-center space-x-1">
+                        {renderStars(userRating || 0, true, handleVote)}
+                      </div>
+                      {userRating && (
+                        <p className="text-sm text-green-600 mt-2">
+                          {userRating} yıldız verdiniz
+                        </p>
+                      )}
+                    </div>
                   )}
                 </div>
               </div>
