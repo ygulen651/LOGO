@@ -166,26 +166,12 @@ export default function Home() {
             
             {/* KARTAP Logo */}
             <div className="flex items-center justify-center space-x-4 mb-6">
-              <div className="flex items-center space-x-3 bg-white/80 backdrop-blur-sm rounded-2xl px-6 py-4 shadow-lg">
-                {/* Logo Symbol */}
-                <div className="relative">
-                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-                    <div className="w-8 h-8 bg-blue-600 rounded-full relative">
-                      {/* Three-petal design */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
-                          <div className="w-4 h-4 bg-red-500 rounded-full"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Text */}
-                <div className="text-left">
-                  <div className="text-xl font-bold text-blue-600">KARTAP</div>
-                  <div className="text-sm text-blue-600 font-medium">KARAMAN TANITIM VE TURİZM DERNEĞİ</div>
-                </div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-6 py-4 shadow-lg">
+                <img 
+                  src="/kartap logo.png" 
+                  alt="KARTAP Logo" 
+                  className="h-16 w-auto object-contain"
+                />
               </div>
             </div>
             
