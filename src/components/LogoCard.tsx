@@ -11,6 +11,8 @@ interface Logo {
   height: number;
   totalVotes: number;
   averageRating: number;
+  firstName: string;
+  lastName: string;
   createdAt: string;
 }
 
@@ -83,9 +85,12 @@ export function LogoCard({ logo }: LogoCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
         <div className="p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-3 truncate font-playfair group-hover:text-blue-600 transition-colors duration-300">
+          <h3 className="text-xl font-bold text-gray-900 mb-2 truncate font-playfair group-hover:text-blue-600 transition-colors duration-300">
             {logo.title}
           </h3>
+          <p className="text-sm text-gray-600 mb-3">
+            Tasarımcı: <span className="font-medium text-blue-600">{logo.firstName} {logo.lastName}</span>
+          </p>
           
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-1">

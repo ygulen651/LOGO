@@ -7,6 +7,11 @@ export interface ILogo extends Document {
   height: number;
   totalVotes: number;
   averageRating: number;
+  // İletişim bilgileri (sadece veritabanında)
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -36,6 +41,28 @@ const LogoSchema: Schema = new Schema({
   averageRating: {
     type: Number,
     default: 0,
+  },
+  // İletişim bilgileri (sadece veritabanında)
+  firstName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+    trim: true,
   },
 }, {
   timestamps: true,

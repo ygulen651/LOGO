@@ -9,6 +9,10 @@ import Image from 'next/image';
 
 const uploadSchema = z.object({
   title: z.string().min(1, 'Başlık gerekli').max(100, 'Başlık çok uzun'),
+  firstName: z.string().min(1, 'Ad gerekli').max(50, 'Ad çok uzun'),
+  lastName: z.string().min(1, 'Soyad gerekli').max(50, 'Soyad çok uzun'),
+  email: z.string().email('Geçerli bir email adresi girin'),
+  phone: z.string().min(10, 'Geçerli bir telefon numarası girin').max(15, 'Telefon numarası çok uzun'),
   consent: z.boolean().refine((val) => val === true, {
     message: 'Logo yüklemek için izin onayı gerekli',
   }),
@@ -70,6 +74,10 @@ export default function UploadPage() {
     try {
       const formData = new FormData();
       formData.append('title', data.title);
+      formData.append('firstName', data.firstName);
+      formData.append('lastName', data.lastName);
+      formData.append('email', data.email);
+      formData.append('phone', data.phone);
       formData.append('file', selectedFile);
 
       const response = await fetch('/api/logos', {
@@ -114,6 +122,81 @@ export default function UploadPage() {
             {errors.title && (
               <p className="mt-1 text-sm text-red-600">{errors.title.message}</p>
             )}
+          </div>
+
+          {/* İletişim Bilgileri */}
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">İletişim Bilgileri</h3>
+            
+            {/* Ad Soyad */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
+                  Ad *
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  {...register('firstName')}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Adınız"
+                />
+                {errors.firstName && (
+                  <p className="mt-1 text-sm text-red-600">{errors.firstName.message}</p>
+                )}
+              </div>
+              
+              <div>
+                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
+                  Soyad *
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  {...register('lastName')}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Soyadınız"
+                />
+                {errors.lastName && (
+                  <p className="mt-1 text-sm text-red-600">{errors.lastName.message}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Email ve Telefon */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  {...register('email')}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="ornek@email.com"
+                />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                )}
+              </div>
+              
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                  Telefon *
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  {...register('phone')}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="0555 123 45 67"
+                />
+                {errors.phone && (
+                  <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
+                )}
+              </div>
+            </div>
           </div>
 
           {/* Dosya Seçimi */}

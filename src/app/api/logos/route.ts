@@ -8,10 +8,14 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const title = formData.get('title') as string;
+    const firstName = formData.get('firstName') as string;
+    const lastName = formData.get('lastName') as string;
+    const email = formData.get('email') as string;
+    const phone = formData.get('phone') as string;
     const file = formData.get('file') as File;
 
-    if (!title || !file) {
-      return NextResponse.json({ error: 'Başlık ve dosya gerekli' }, { status: 400 });
+    if (!title || !firstName || !lastName || !email || !phone || !file) {
+      return NextResponse.json({ error: 'Tüm alanlar gerekli' }, { status: 400 });
     }
 
     // Dosya boyutu kontrolü (5MB)
@@ -41,6 +45,10 @@ export async function POST(request: NextRequest) {
 
     const logo = await Logo.create({
       title,
+      firstName,
+      lastName,
+      email,
+      phone,
       imageUrl: result.secure_url,
       width: result.width,
       height: result.height,

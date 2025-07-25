@@ -12,6 +12,8 @@ interface Logo {
   height: number;
   totalVotes: number;
   averageRating: number;
+  firstName: string;
+  lastName: string;
   createdAt: string;
 }
 
@@ -182,6 +184,9 @@ export default function LogoDetailPage() {
             <div className="flex-1">
               <div className="mb-4">
                 <h1 className="text-3xl font-bold text-gray-900">{logo.title}</h1>
+                <p className="text-lg text-gray-600 mt-2">
+                  Tasarımcı: <span className="font-semibold text-blue-600">{logo.firstName} {logo.lastName}</span>
+                </p>
               </div>
               
               <div className="flex items-center space-x-4 mb-6">
