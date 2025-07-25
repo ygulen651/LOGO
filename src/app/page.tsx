@@ -146,6 +146,55 @@ export default function Home() {
           <LogoGrid />
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-gradient-to-r from-blue-50 to-purple-50 py-16 mt-20">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center">
+            <div className="mb-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4 font-playfair">
+                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  KARAMAN LOGO YARIŞMASI
+                </span>
+              </h3>
+              <p className="text-lg text-gray-600 font-inter leading-relaxed max-w-4xl mx-auto">
+                Karaman Logo Yarışması, <span className="text-blue-600 font-semibold">Karaman Tanıtım ve Turizm Derneği (KARTAP)</span> tarafından düzenlenmektedir.
+                <br />
+                Amaç, Karaman&apos;ın kimliğini yansıtan özgün tasarımları desteklemektir.
+              </p>
+            </div>
+            
+            {/* KARTAP Logo */}
+            <div className="flex items-center justify-center space-x-4 mb-6">
+              <div className="flex items-center space-x-3 bg-white/80 backdrop-blur-sm rounded-2xl px-6 py-4 shadow-lg">
+                {/* Logo Symbol */}
+                <div className="relative">
+                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                    <div className="w-8 h-8 bg-blue-600 rounded-full relative">
+                      {/* Three-petal design */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+                          <div className="w-4 h-4 bg-red-500 rounded-full"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Text */}
+                <div className="text-left">
+                  <div className="text-xl font-bold text-blue-600">KARTAP</div>
+                  <div className="text-sm text-blue-600 font-medium">KARAMAN TANITIM VE TURİZM DERNEĞİ</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-sm text-gray-500 font-inter">
+              © 2024 Karaman Tanıtım ve Turizm Derneği. Tüm hakları saklıdır.
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
