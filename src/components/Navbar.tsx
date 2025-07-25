@@ -33,6 +33,10 @@ export function Navbar() {
               TREND LOGOLAR
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </Link>
+            <Link href="/api-ratings" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 relative group">
+              API PUANLARI
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+            </Link>
             <Link href="/upload" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-300">
               LOGO YÜKLE
             </Link>
@@ -60,6 +64,9 @@ export function Navbar() {
               </Link>
               <Link href="/trending" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300">
                 TREND LOGOLAR
+              </Link>
+              <Link href="/api-ratings" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300">
+                API PUANLARI
               </Link>
               <Link href="/upload" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full font-medium text-center">
                 LOGO YÜKLE
