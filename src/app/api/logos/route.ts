@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes);
 
     // Cloudinary'ye yükle
-    const result = await new Promise((resolve, reject) => {
+    const result = await new Promise<any>((resolve, reject) => { // eslint-disable-line @typescript-eslint/no-explicit-any
       cloudinary.uploader.upload_stream(
         {
           resource_type: 'image',
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
           else resolve(result);
         }
       ).end(buffer);
-    }) as any;
+    }) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     await connectDB();
 

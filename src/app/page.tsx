@@ -23,7 +23,7 @@ export default function Home() {
             <span className="text-gray-800">Logosunu Seçiyor</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto font-inter leading-relaxed">
-            Karaman'ın en güzel logolarını yükleyin, topluluktan oy alın ve 
+            Karaman&apos;ın en güzel logolarını yükleyin, topluluktan oy alın ve 
             <span className="text-blue-600 font-semibold"> EN POPÜLER TASARIMLARI</span> keşfedin.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -62,7 +62,7 @@ export default function Home() {
             </svg>
           </div>
           <h3 className="text-2xl font-bold mb-4 font-playfair text-gray-800">Logo Yükle</h3>
-          <p className="text-gray-600 font-inter leading-relaxed">Karaman'ın en güzel logolarını kolayca yükleyin ve toplulukla paylaşın.</p>
+          <p className="text-gray-600 font-inter leading-relaxed">Karaman&apos;ın en güzel logolarını kolayca yükleyin ve toplulukla paylaşın.</p>
         </div>
 
         <div className="text-center p-8 bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fadeIn" style={{animationDelay: '0.4s'}}>
@@ -82,7 +82,7 @@ export default function Home() {
             </svg>
           </div>
           <h3 className="text-2xl font-bold mb-4 font-playfair text-gray-800">Trend Keşfet</h3>
-          <p className="text-gray-600 font-inter leading-relaxed">En popüler ve trend logoları keşfedin, Karaman'ın en iyi tasarımlarını görün.</p>
+          <p className="text-gray-600 font-inter leading-relaxed">En popüler ve trend logoları keşfedin, Karaman&apos;ın en iyi tasarımlarını görün.</p>
         </div>
       </div>
 
@@ -96,7 +96,7 @@ export default function Home() {
             <br />
             <span className="text-gray-800">LOGOLAR</span>
           </h2>
-          <p className="text-lg text-gray-600 font-inter">Karaman'ın en yeni logo tasarımlarını keşfedin</p>
+          <p className="text-lg text-gray-600 font-inter">Karaman&apos;ın en yeni logo tasarımlarını keşfedin</p>
         </div>
         <div className="animate-fadeIn" style={{animationDelay: '0.8s'}}>
           <LogoGrid />

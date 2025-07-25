@@ -6,7 +6,7 @@ if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
 }
 
-let cached: any = null;
+let cached: any = null; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 async function connectDB() {
   if (cached) {

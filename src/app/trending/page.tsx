@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { LogoGrid } from '@/components/LogoGrid';
 
 interface Logo {
   _id: string;
