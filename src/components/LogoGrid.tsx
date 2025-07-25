@@ -41,6 +41,38 @@ export function LogoGrid() {
     }
   };
 
+  const handleDelete = async (logoId: string) => {
+    if (!confirm('Bu logoyu silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
+      return;
+    }
+
+    const password = prompt('Admin şifresini girin:');
+    if (!password) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/logos/${logoId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        setLogos(logos.filter(logo => logo._id !== logoId));
+        alert('Logo başarıyla silindi!');
+      } else {
+        alert(data.error || 'Logo silinirken hata oluştu');
+      }
+    } catch (err) {
+      alert('Logo silinirken hata oluştu');
+    }
+  };
+
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -74,7 +106,7 @@ export function LogoGrid() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {logos.map((logo) => (
-        <LogoCard key={logo._id} logo={logo} />
+        <LogoCard key={logo._id} logo={logo} onDelete={handleDelete} />
       ))}
     </div>
   );

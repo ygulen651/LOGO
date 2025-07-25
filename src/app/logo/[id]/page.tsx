@@ -24,6 +24,7 @@ export default function LogoDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [userRating, setUserRating] = useState<number | null>(null);
   const [voting, setVoting] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     fetchLogo();
@@ -99,6 +100,41 @@ export default function LogoDetailPage() {
     ));
   };
 
+  const handleDelete = async () => {
+    if (!confirm('Bu logoyu silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
+      return;
+    }
+
+    const password = prompt('Admin şifresini girin:');
+    if (!password) {
+      return;
+    }
+
+    setDeleting(true);
+    try {
+      const response = await fetch(`/api/logos/${logoId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        alert('Logo başarıyla silindi!');
+        window.location.href = '/';
+      } else {
+        alert(data.error || 'Logo silinirken hata oluştu');
+      }
+    } catch (err) {
+      alert('Logo silinirken hata oluştu');
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -134,7 +170,28 @@ export default function LogoDetailPage() {
         <div className="p-8">
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
             <div className="flex-1">
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">{logo.title}</h1>
+              <div className="flex items-center justify-between mb-4">
+                <h1 className="text-3xl font-bold text-gray-900">{logo.title}</h1>
+                <button
+                  onClick={handleDelete}
+                  disabled={deleting}
+                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300 flex items-center space-x-2"
+                >
+                  {deleting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      <span>Siliniyor...</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                      <span>LOGOSU SİL</span>
+                    </>
+                  )}
+                </button>
+              </div>
               
               <div className="flex items-center space-x-4 mb-6">
                 <span className="text-gray-500">

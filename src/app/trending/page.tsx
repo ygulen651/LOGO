@@ -40,6 +40,38 @@ export default function TrendingPage() {
     }
   };
 
+  const handleDelete = async (logoId: string) => {
+    if (!confirm('Bu logoyu silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
+      return;
+    }
+
+    const password = prompt('Admin şifresini girin:');
+    if (!password) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/logos/${logoId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        setLogos(logos.filter(logo => logo._id !== logoId));
+        alert('Logo başarıyla silindi!');
+      } else {
+        alert(data.error || 'Logo silinirken hata oluştu');
+      }
+    } catch (err) {
+      alert('Logo silinirken hata oluştu');
+    }
+  };
+
   if (loading) {
     return (
       <div className="space-y-8">
@@ -83,7 +115,16 @@ export default function TrendingPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {logos.map((logo) => (
-            <div key={logo._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            <div key={logo._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow relative">
+              <button
+                onClick={() => handleDelete(logo._id)}
+                className="absolute top-2 right-2 z-10 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition-colors duration-300"
+                title="Logoyu Sil"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
               <div className="relative h-48 bg-gray-100">
                 <img
                   src={logo.imageUrl}
