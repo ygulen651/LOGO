@@ -291,6 +291,7 @@ export default function UploadPage() {
               <input
                 type="checkbox"
                 id="consent"
+                {...register('consent')}
                 checked={consent}
                 onChange={(e) => setConsent(e.target.checked)}
                 className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
@@ -299,6 +300,9 @@ export default function UploadPage() {
                 <span className="font-medium text-blue-900">İzin Onayı:</span> Bu tasarımın web sitesinde sergilenmesine ve herkese açık şekilde görüntülenmesine izin veriyorum. Yayından kaldırmak isterseniz bizimle iletişime geçebilirsiniz.
               </label>
             </div>
+            {errors.consent && (
+              <p className="mt-1 text-sm text-red-600">{errors.consent.message}</p>
+            )}
           </div>
 
           {/* Hata Mesajı */}
@@ -331,6 +335,27 @@ export default function UploadPage() {
             className="w-full bg-green-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-700 transition-colors"
           >
             Test Butonu (Console&apos;u Kontrol Edin)
+          </button>
+
+          {/* Direct Submit Button */}
+          <button
+            type="button"
+            onClick={() => {
+              console.log('Direct submit butonu tıklandı');
+              if (selectedFile && consent) {
+                console.log('Form submit başlatılıyor...');
+                // Form submit'i manuel olarak tetikle
+                const form = document.querySelector('form');
+                if (form) {
+                  form.dispatchEvent(new Event('submit', { bubbles: true }));
+                }
+              } else {
+                console.log('Dosya veya consent eksik');
+              }
+            }}
+            className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
+          >
+            Direct Submit Test
           </button>
         </form>
       </div>
