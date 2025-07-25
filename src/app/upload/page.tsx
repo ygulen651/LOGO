@@ -129,7 +129,7 @@ export default function UploadPage() {
                     </span>
                     <p className="text-sm">veya sürükleyip bırakın</p>
                   </div>
-                  <p className="text-xs text-gray-500">PNG, JPG, GIF, SVG (max. 10MB)</p>
+                  <p className="text-xs text-gray-500">PNG, JPG, GIF, SVG (200x200px - 1200x1200px, max. 5MB)</p>
                 </div>
               </label>
             </div>

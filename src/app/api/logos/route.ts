@@ -13,6 +13,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Başlık ve dosya gerekli' }, { status: 400 });
     }
 
+    // Dosya boyutu kontrolü (5MB)
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      return NextResponse.json({ error: 'Dosya boyutu 5MB\'dan büyük olamaz' }, { status: 400 });
+    }
+
     // Dosyayı buffer'a çevir
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);

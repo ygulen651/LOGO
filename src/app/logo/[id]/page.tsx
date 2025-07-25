@@ -156,7 +156,7 @@ export default function LogoDetailPage() {
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         {/* Logo Image */}
-        <div className="relative h-96 bg-gray-100">
+        <div className="relative h-80 bg-gray-100">
           <Image
             src={logo.imageUrl}
             alt={logo.title}

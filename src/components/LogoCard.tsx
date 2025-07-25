@@ -89,7 +89,7 @@ export function LogoCard({ logo, onDelete }: LogoCardProps) {
             </svg>
           </button>
         )}
-        <div className="relative h-56 bg-gradient-to-br from-blue-50 to-purple-50 p-4">
+        <div className="relative h-48 bg-gradient-to-br from-blue-50 to-purple-50 p-4">
           <Image
             src={logo.imageUrl}
             alt={logo.title}
