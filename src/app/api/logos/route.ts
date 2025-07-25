@@ -6,7 +6,6 @@ import { trackApiPerformance } from '@/lib/apiRating';
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
-  let isSuccess = false;
   
   try {
     const formData = await request.formData();
@@ -49,7 +48,6 @@ export async function POST(request: NextRequest) {
       height: result.height,
     });
 
-    isSuccess = true;
     return NextResponse.json(logo);
   } catch (error) {
     console.error('Logo yükleme hatası:', error);
@@ -62,7 +60,6 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   const startTime = Date.now();
-  let isSuccess = false;
   
   try {
     await connectDB();
@@ -83,7 +80,6 @@ export async function GET(request: NextRequest) {
 
     const total = await Logo.countDocuments();
 
-    isSuccess = true;
     return NextResponse.json({
       logos,
       pagination: {

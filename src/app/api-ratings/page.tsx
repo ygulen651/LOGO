@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getApiRatings } from '@/lib/apiRating';
 
 interface ApiRating {
   _id: string;
@@ -36,7 +35,7 @@ export default function ApiRatingsPage() {
       } else {
         setError(data.error || 'API puanları yüklenirken hata oluştu');
       }
-    } catch (err) {
+    } catch {
       setError('API puanları yüklenirken hata oluştu');
     } finally {
       setLoading(false);
@@ -82,7 +81,7 @@ export default function ApiRatingsPage() {
     <div className="max-w-6xl mx-auto p-6">
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">API Puanları</h1>
-        <p className="text-xl text-gray-600">Tüm API'lerin performans puanları</p>
+        <p className="text-xl text-gray-600">Tüm API&apos;lerin performans puanları</p>
       </div>
 
       {ratings.length === 0 ? (

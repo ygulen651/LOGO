@@ -83,7 +83,7 @@ export default function LogoDetailPage() {
   useEffect(() => {
     fetchLogo();
     checkVoteStatus(); // Sayfa yüklendiğinde oy durumunu kontrol et
-  }, [fetchLogo]);
+  }, [fetchLogo, checkVoteStatus]);
 
   const handleVote = async (rating: number) => {
     setVoting(true);
