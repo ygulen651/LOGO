@@ -40,7 +40,7 @@ export default function LogoDetailPage() {
       } else {
         setError(data.error || 'Logo bulunamadı');
       }
-    } catch (err) {
+    } catch {
       setError('Logo yüklenirken hata oluştu');
     } finally {
       setLoading(false);
@@ -72,7 +72,7 @@ export default function LogoDetailPage() {
       } else {
         alert(data.error || 'Oy verirken hata oluştu');
       }
-    } catch (err) {
+    } catch {
       alert('Oy verirken hata oluştu');
     } finally {
       setVoting(false);
@@ -128,7 +128,7 @@ export default function LogoDetailPage() {
       } else {
         alert(data.error || 'Logo silinirken hata oluştu');
       }
-    } catch (err) {
+    } catch {
       alert('Logo silinirken hata oluştu');
     } finally {
       setDeleting(false);

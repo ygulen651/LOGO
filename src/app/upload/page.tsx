@@ -74,7 +74,7 @@ export default function UploadPage() {
       } else {
         setError(result.error || 'Logo yüklenirken hata oluştu');
       }
-    } catch (err) {
+    } catch {
       setError('Logo yüklenirken hata oluştu');
     } finally {
       setUploading(false);

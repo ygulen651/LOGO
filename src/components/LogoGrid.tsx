@@ -33,7 +33,7 @@ export function LogoGrid() {
       } else {
         setError(data.error || 'Logolar yüklenirken hata oluştu');
       }
-    } catch (err) {
+    } catch {
       setError('Logolar yüklenirken hata oluştu');
     } finally {
       setLoading(false);
@@ -67,7 +67,7 @@ export function LogoGrid() {
       } else {
         alert(data.error || 'Logo silinirken hata oluştu');
       }
-    } catch (err) {
+    } catch {
       alert('Logo silinirken hata oluştu');
     }
   };

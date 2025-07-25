@@ -32,7 +32,7 @@ export default function TrendingPage() {
       } else {
         setError(data.error || 'Trend logolar yüklenirken hata oluştu');
       }
-    } catch (err) {
+    } catch {
       setError('Trend logolar yüklenirken hata oluştu');
     } finally {
       setLoading(false);
@@ -66,7 +66,7 @@ export default function TrendingPage() {
       } else {
         alert(data.error || 'Logo silinirken hata oluştu');
       }
-    } catch (err) {
+    } catch {
       alert('Logo silinirken hata oluştu');
     }
   };
