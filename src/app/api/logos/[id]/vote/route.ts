@@ -8,10 +8,10 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { rating, sessionId } = await request.json();
+    const { like, sessionId } = await request.json();
     
-    if (!rating || rating < 1 || rating > 5) {
-      return NextResponse.json({ error: 'Geçerli bir puan gerekli (1-5)' }, { status: 400 });
+    if (typeof like !== 'boolean') {
+      return NextResponse.json({ error: 'Geçerli bir beğeni değeri gerekli' }, { status: 400 });
     }
 
     if (!sessionId) {
@@ -43,21 +43,20 @@ export async function POST(
     await Vote.create({
       logo: id,
       user: sessionId,
-      rating,
+      like,
     });
 
-    // Logo'nun ortalama puanını güncelle
-    const votes = await Vote.find({ logo: id });
-    const totalRating = votes.reduce((sum, vote) => sum + vote.rating, 0);
-    const averageRating = totalRating / votes.length;
+    // Logo'nun beğeni sayısını güncelle
+    const votes = await Vote.find({ logo: id, like: true });
+    const totalLikes = votes.length;
 
-    logo.averageRating = averageRating;
-    logo.totalVotes = votes.length;
+    logo.totalLikes = totalLikes;
+    logo.totalVotes = await Vote.countDocuments({ logo: id });
     await logo.save();
 
     return NextResponse.json({ 
       success: true, 
-      averageRating: logo.averageRating,
+      totalLikes: logo.totalLikes,
       totalVotes: logo.totalVotes 
     });
   } catch (error) {
@@ -75,12 +74,13 @@ export async function GET(
     const { id } = await params;
 
     const votes = await Vote.find({ logo: id });
-    const totalRating = votes.reduce((sum, vote) => sum + vote.rating, 0);
-    const averageRating = votes.length > 0 ? totalRating / votes.length : 0;
+    const likes = await Vote.find({ logo: id, like: true });
+    const totalLikes = likes.length;
+    const totalVotes = votes.length;
 
     return NextResponse.json({ 
-      totalVotes: votes.length,
-      averageRating: averageRating
+      totalVotes,
+      totalLikes
     });
   } catch (error) {
     console.error('Oylama kontrolü hatası:', error);

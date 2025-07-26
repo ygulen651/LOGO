@@ -9,9 +9,9 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get('limit') || '10');
 
-    // En çok oy alan logoları getir
+    // En çok beğenilen logoları getir
     const trendingLogos = await Logo.find()
-      .sort({ totalVotes: -1, averageRating: -1 })
+      .sort({ totalLikes: -1, totalVotes: -1 })
       .limit(limit);
 
     return NextResponse.json(trendingLogos);

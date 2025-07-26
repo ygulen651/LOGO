@@ -10,7 +10,7 @@ interface Logo {
   width: number;
   height: number;
   totalVotes: number;
-  averageRating: number;
+  totalLikes: number;
   firstName: string;
   lastName: string;
   createdAt: string;
@@ -41,8 +41,6 @@ export function LogoGrid() {
       setLoading(false);
     }
   };
-
-
 
   if (loading) {
     return (

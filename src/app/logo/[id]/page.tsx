@@ -11,7 +11,7 @@ interface Logo {
   width: number;
   height: number;
   totalVotes: number;
-  averageRating: number;
+  totalLikes: number;
   firstName: string;
   lastName: string;
   createdAt: string;
@@ -24,7 +24,7 @@ export default function LogoDetailPage() {
   const [logo, setLogo] = useState<Logo | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [userRating, setUserRating] = useState<number | null>(null);
+  const [userLiked, setUserLiked] = useState<boolean | null>(null);
   const [voting, setVoting] = useState(false);
   const [hasVoted, setHasVoted] = useState(false);
 
@@ -86,7 +86,7 @@ export default function LogoDetailPage() {
     checkVoteStatus(); // Sayfa yüklendiğinde oy durumunu kontrol et
   }, [fetchLogo, checkVoteStatus]);
 
-  const handleVote = async (rating: number) => {
+  const handleLike = async () => {
     setVoting(true);
     try {
       const sessionId = getSessionId();
@@ -95,57 +95,34 @@ export default function LogoDetailPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ rating, sessionId }),
+        body: JSON.stringify({ like: true, sessionId }),
       });
 
       const data = await response.json();
       
       if (response.ok) {
-        setUserRating(rating);
+        setUserLiked(true);
         if (logo) {
           setLogo({
             ...logo,
-            averageRating: data.averageRating,
+            totalLikes: data.totalLikes,
             totalVotes: data.totalVotes,
           });
         }
-        // Başarılı oy verme mesajı
-        alert(`Başarıyla ${rating} yıldız verdiniz!`);
-        markAsVoted(); // Oy verildikten sonra butonları devre dışı bırak
+        // Başarılı beğeni mesajı
+        alert('Logoyu beğendiniz!');
+        markAsVoted(); // Oy verildikten sonra butonu devre dışı bırak
       } else {
         // Hata mesajını göster
-        alert(data.error || 'Oy verirken hata oluştu');
+        alert(data.error || 'Beğeni işlemi sırasında hata oluştu');
       }
     } catch (error) {
-      console.error('Oy verme hatası:', error);
-      alert('Oy verirken hata oluştu');
+      console.error('Beğeni hatası:', error);
+      alert('Beğeni işlemi sırasında hata oluştu');
     } finally {
       setVoting(false);
     }
   };
-
-  const renderStars = (rating: number, interactive = false, onStarClick?: (rating: number) => void) => {
-    return [...Array(5)].map((_, i) => (
-      <button
-        key={i}
-        onClick={() => interactive && onStarClick && onStarClick(i + 1)}
-        disabled={!interactive || voting || hasVoted} // Oy verilmişse devre dışı
-        className={`w-8 h-8 ${
-          interactive ? 'cursor-pointer hover:scale-110 transition-transform' : ''
-        } ${
-          i < Math.floor(rating)
-            ? 'text-yellow-400 fill-current'
-            : 'text-gray-300 fill-current'
-        }`}
-      >
-        <svg viewBox="0 0 20 20">
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
-      </button>
-    ));
-  };
-
-
 
   if (loading) {
     return (
@@ -211,15 +188,17 @@ export default function LogoDetailPage() {
               </div>
             </div>
 
-            {/* Rating Section */}
+            {/* Like Section */}
             <div className="lg:w-80">
               <div className="bg-blue-50 p-6 rounded-lg">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Ortalama Puan</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Beğeni Sayısı</h3>
                 
                 <div className="flex items-center space-x-2 mb-4">
-                  {renderStars(logo.averageRating)}
+                  <svg className="w-8 h-8 text-green-500 fill-current" viewBox="0 0 20 20">
+                    <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                  </svg>
                   <span className="text-lg font-semibold text-gray-900">
-                    {logo.averageRating.toFixed(1)}
+                    {logo.totalLikes}
                   </span>
                 </div>
 
@@ -234,28 +213,34 @@ export default function LogoDetailPage() {
                       <p className="text-sm text-red-600 font-medium mb-2">
                         ⚠️ Bu logoya zaten oy verdiniz!
                       </p>
-                      <div className="flex items-center space-x-1">
-                        {renderStars(userRating || 0, false)}
+                      <div className="flex items-center space-x-2">
+                        <svg className="w-6 h-6 text-green-500 fill-current" viewBox="0 0 20 20">
+                          <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                        </svg>
+                        <span className="text-sm text-green-600">
+                          Logoyu beğendiniz
+                        </span>
                       </div>
-                      {userRating && (
-                        <p className="text-sm text-green-600 mt-2">
-                          {userRating} yıldız verdiniz
-                        </p>
-                      )}
                     </div>
                   ) : (
                     <div className="mb-4">
                       <p className="text-sm text-blue-600 mb-2">
-                        Oy vermek için yıldızlara tıklayın
+                        Logoyu beğenmek için kalp ikonuna tıklayın
                       </p>
-                      <div className="flex items-center space-x-1">
-                        {renderStars(userRating || 0, true, handleVote)}
-                      </div>
-                      {userRating && (
-                        <p className="text-sm text-green-600 mt-2">
-                          {userRating} yıldız verdiniz
-                        </p>
-                      )}
+                      <button
+                        onClick={handleLike}
+                        disabled={voting || hasVoted}
+                        className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
+                          voting || hasVoted
+                            ? 'bg-gray-300 cursor-not-allowed'
+                            : 'bg-green-500 hover:bg-green-600 text-white hover:scale-105'
+                        }`}
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                        </svg>
+                        <span>{voting ? 'İşleniyor...' : 'Beğen'}</span>
+                      </button>
                     </div>
                   )}
                 </div>

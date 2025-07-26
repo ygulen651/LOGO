@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface IVote extends Document {
   logo: mongoose.Types.ObjectId;
   user: string; // IP adresi veya kullanıcı kimliği
-  rating: number; // 1-5 yıldız
+  like: boolean; // true = beğenildi, false = beğenilmedi
   createdAt: Date;
   updatedAt: Date;
 }
@@ -18,11 +18,10 @@ const VoteSchema: Schema = new Schema({
     type: String,
     required: true,
   },
-  rating: {
-    type: Number,
+  like: {
+    type: Boolean,
     required: true,
-    min: 1,
-    max: 5,
+    default: true,
   },
 }, {
   timestamps: true,

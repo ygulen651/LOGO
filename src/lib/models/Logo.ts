@@ -6,8 +6,7 @@ export interface ILogo extends Document {
   width: number;
   height: number;
   totalVotes: number;
-  averageRating: number;
-  // İletişim bilgileri (sadece veritabanında)
+  totalLikes: number; // Beğeni sayısı
   firstName: string;
   lastName: string;
   email: string;
@@ -38,11 +37,10 @@ const LogoSchema: Schema = new Schema({
     type: Number,
     default: 0,
   },
-  averageRating: {
+  totalLikes: {
     type: Number,
     default: 0,
   },
-  // İletişim bilgileri (sadece veritabanında)
   firstName: {
     type: String,
     required: true,
@@ -57,7 +55,6 @@ const LogoSchema: Schema = new Schema({
     type: String,
     required: true,
     trim: true,
-    lowercase: true,
   },
   phone: {
     type: String,

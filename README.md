@@ -6,7 +6,7 @@ Modern ve kullanıcı dostu bir logo oylama ve anket web uygulaması. Kullanıc�
 
 - **Kullanıcı Kimlik Doğrulama**: Google OAuth ile güvenli giriş
 - **Logo Yükleme**: Cloudinary entegrasyonu ile otomatik boyut algılama
-- **Oylama Sistemi**: 1-5 yıldız arası puanlama
+- **Oylama Sistemi**: Tek like butonu ile beğeni sistemi
 - **Trend Logolar**: En popüler logoları görüntüleme
 - **Kullanıcı Dashboard**: Kişisel logo ve oy geçmişi
 - **Responsive Tasarım**: Mobil ve masaüstü uyumlu
@@ -136,9 +136,9 @@ src/
 - Form validasyonu
 
 ### Oylama Sistemi
-- 1-5 yıldız puanlama
+- Tek like butonu ile beğeni sistemi
 - Duplicate oy engelleme
-- Gerçek zamanlı puan güncelleme
+- Gerçek zamanlı beğeni sayısı güncelleme
 - Kullanıcı oy geçmişi
 
 ### Dashboard

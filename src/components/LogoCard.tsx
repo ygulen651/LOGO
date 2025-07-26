@@ -10,7 +10,7 @@ interface Logo {
   width: number;
   height: number;
   totalVotes: number;
-  averageRating: number;
+  totalLikes: number;
   firstName: string;
   lastName: string;
   createdAt: string;
@@ -29,51 +29,11 @@ export function LogoCard({ logo }: LogoCardProps) {
     });
   };
 
-  const renderStars = (rating: number) => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(
-        <svg key={i} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
-      );
-    }
-
-    if (hasHalfStar) {
-      stars.push(
-        <svg key="half" className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-          <defs>
-            <linearGradient id="half-star">
-              <stop offset="50%" stopColor="currentColor" />
-              <stop offset="50%" stopColor="#e5e7eb" />
-            </linearGradient>
-          </defs>
-          <path fill="url(#half-star)" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
-      );
-    }
-
-    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(
-        <svg key={`empty-${i}`} className="w-4 h-4 text-gray-300 fill-current" viewBox="0 0 20 20">
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
-      );
-    }
-
-    return stars;
-  };
-
-
-
   return (
-    <Link href={`/logo/${logo._id}`}>
-      <div className="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative">
-        <div className="relative h-48 bg-gradient-to-br from-blue-50 to-purple-50 p-4">
+    <Link href={`/logo/${logo._id}`} className="block">
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
+        {/* Logo Image */}
+        <div className="relative h-48 bg-gray-100 overflow-hidden">
           <Image
             src={logo.imageUrl}
             alt={logo.title}
@@ -81,25 +41,25 @@ export function LogoCard({ logo }: LogoCardProps) {
             className="object-contain group-hover:scale-105 transition-transform duration-300"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          {/* Hover overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
-        <div className="p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-2 truncate font-playfair group-hover:text-blue-600 transition-colors duration-300">
+
+        {/* Logo Info */}
+        <div className="p-4">
+          <h3 className="text-lg font-semibold text-gray-900 mb-1 truncate">
             {logo.title}
           </h3>
-          <p className="text-sm text-gray-600 mb-3">
+          <p className="text-sm text-gray-600 mb-2">
             Tasarımcı: <span className="font-medium text-blue-600">{logo.firstName} {logo.lastName}</span>
           </p>
           
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <div className="flex items-center space-x-1">
-              {renderStars(logo.averageRating)}
-              <span className="ml-2 text-sm font-semibold text-gray-700">
-                {logo.averageRating.toFixed(1)}
-              </span>
+              <svg className="w-4 h-4 text-green-500 fill-current" viewBox="0 0 20 20">
+                <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+              </svg>
+              <span className="text-sm text-gray-600">{logo.totalLikes} beğeni</span>
             </div>
-            <div className="flex items-center space-x-1 text-blue-600 font-medium">
+            <div className="flex items-center space-x-1 text-green-600">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
