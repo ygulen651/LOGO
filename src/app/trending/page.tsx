@@ -66,9 +66,9 @@ export default function TrendingPage() {
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
           Trend Logolar
         </h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          En çok beğenilen ve popüler logoları keşfedin. Karaman'ın en iyi tasarımlarını görün.
-        </p>
+                  <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            En çok beğenilen ve popüler logoları keşfedin. Karaman&apos;ın en iyi tasarımlarını görün.
+          </p>
       </div>
 
       {logos.length === 0 ? (
