@@ -33,7 +33,6 @@ export default function LogoDetailPage() {
   const [logo, setLogo] = useState<Logo | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [userLiked, setUserLiked] = useState<boolean | null>(null);
   const [voting, setVoting] = useState(false);
   const [hasVoted, setHasVoted] = useState(false);
   
@@ -62,7 +61,7 @@ export default function LogoDetailPage() {
   };
 
   // Kullanıcının bu logoya oy verip vermediğini kontrol et
-  const checkVoteStatus = () => {
+  const checkVoteStatus = useCallback(() => {
     if (typeof window !== 'undefined') {
       const votedLogos = JSON.parse(localStorage.getItem('votedLogos') || '[]');
       const hasVotedForThisLogo = votedLogos.includes(logoId);
@@ -70,7 +69,7 @@ export default function LogoDetailPage() {
       return hasVotedForThisLogo;
     }
     return false;
-  };
+  }, [logoId]);
 
   // Oy verilen logoyu localStorage'a kaydet
   const markAsVoted = () => {
@@ -177,7 +176,6 @@ export default function LogoDetailPage() {
       const data = await response.json();
       
       if (response.ok) {
-        setUserLiked(true);
         if (logo) {
           setLogo({
             ...logo,
