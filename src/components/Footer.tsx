@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export function Footer() {
   return (
     <footer className="bg-gray-900 text-white py-12 mt-16">
@@ -21,19 +23,19 @@ export function Footer() {
             <h3 className="text-xl font-bold mb-4">Hızlı Linkler</h3>
             <ul className="space-y-2">
               <li>
-                <a href="/" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/" className="text-gray-300 hover:text-white transition-colors">
                   Ana Sayfa
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/trending" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/trending" className="text-gray-300 hover:text-white transition-colors">
                   Trend Logolar
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/upload" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/upload" className="text-gray-300 hover:text-white transition-colors">
                   Logo Yükle
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
