@@ -17,15 +17,15 @@ export default function Home() {
         <div className="relative z-10">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 font-playfair">
             <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
-              Karaman
+              Karaman Logo Yarışması
             </span>
             <br />
-            <span className="text-gray-800">Logosunu Seçiyor</span>
+            <span className="text-gray-800">Resmi Oylama Platformu</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto font-inter leading-relaxed">
-            Şehrimizi en iyi yansıtan turizm logosunu birlikte seçiyoruz!
+            KARTAP tarafından düzenlenen resmi Karaman logo yarışmasına katılın!
             <br />
-            <span className="text-blue-600 font-semibold">Yaratıcılığına güveniyorsan, kültürel mirasımızı ve doğal güzelliklerimizi yansıtan bir logo tasarla, yarışmamıza katıl!</span>
+            <span className="text-blue-600 font-semibold">Karaman şehri için en güzel logoları tasarlayın, oy verin ve trend tasarımları keşfedin. Karaman logosu yarışmasına katılmak için hemen logo yükleyin!</span>
           </p>
         </div>
       </div>
