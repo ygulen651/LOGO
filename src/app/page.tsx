@@ -20,7 +20,7 @@ export default function Home() {
               Karaman Logo Yarışması
             </span>
             <br />
-            <span className="text-gray-800">Resmi Oylama Platformu</span>
+            <span className="text-gray-800">Logo Oylama Platformu</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto font-inter leading-relaxed">
             KARTAP tarafından düzenlenen resmi Karaman logo yarışmasına katılın!
