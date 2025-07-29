@@ -9,10 +9,7 @@ export function middleware(request: NextRequest) {
       return NextResponse.next();
     }
     
-    // Ana admin sayfasına erişime izin ver (key olmadan)
-    if (request.nextUrl.pathname === '/admin') {
-      return NextResponse.next();
-    }
+
     
     // Diğer admin sayfaları için anahtar kontrolü
     const adminKey = request.nextUrl.searchParams.get('key');
