@@ -130,17 +130,17 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Recent Logos */}
+      {/* All Logos */}
       <div className="py-12">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4 font-playfair">
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              SON YÜKLENEN
+              TÜM LOGOLAR
             </span>
             <br />
-            <span className="text-gray-800">LOGOLAR</span>
+            <span className="text-gray-800">KARAMAN LOGO YARIŞMASI</span>
           </h2>
-          <p className="text-lg text-gray-600 font-inter">Karaman&apos;ın en yeni logo tasarımlarını keşfedin</p>
+          <p className="text-lg text-gray-600 font-inter">Karaman logo yarışmasına katılan tüm tasarımları keşfedin</p>
         </div>
         <div className="animate-fadeIn" style={{animationDelay: '1.0s'}}>
           <LogoGrid />

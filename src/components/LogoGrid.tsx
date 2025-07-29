@@ -27,7 +27,7 @@ export function LogoGrid() {
 
   const fetchLogos = async () => {
     try {
-      const response = await fetch('/api/logos?limit=6');
+      const response = await fetch('/api/logos');
       const data = await response.json();
       
       if (response.ok) {
