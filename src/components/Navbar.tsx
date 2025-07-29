@@ -36,6 +36,7 @@ export function Navbar() {
             <Link href="/upload" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-300">
               LOGO YÜKLE
             </Link>
+
           </div>
 
           {/* Mobile menu button */}
@@ -64,6 +65,7 @@ export function Navbar() {
               <Link href="/upload" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full font-medium text-center">
                 LOGO YÜKLE
               </Link>
+
             </div>
           </div>
         )}

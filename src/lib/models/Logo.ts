@@ -11,6 +11,7 @@ export interface ILogo extends Document {
   lastName: string;
   email: string;
   phone: string;
+  status: 'pending' | 'approved' | 'rejected';
   createdAt: Date;
   updatedAt: Date;
 }
@@ -60,6 +61,11 @@ const LogoSchema: Schema = new Schema({
     type: String,
     required: true,
     trim: true,
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending',
   },
 }, {
   timestamps: true,
