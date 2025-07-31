@@ -107,29 +107,16 @@ export async function GET(request: NextRequest) {
     await connectDB();
     
     const { searchParams } = new URL(request.url);
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '10');
     const sort = searchParams.get('sort') || 'createdAt';
     const order = searchParams.get('order') || 'desc';
 
-    const skip = (page - 1) * limit;
     const sortOrder = order === 'desc' ? -1 : 1;
 
     const logos = await Logo.find()
-      .sort({ [sort]: sortOrder })
-      .skip(skip)
-      .limit(limit);
-
-    const total = await Logo.countDocuments();
+      .sort({ [sort]: sortOrder });
 
     return NextResponse.json({
       logos,
-      pagination: {
-        page,
-        limit,
-        total,
-        pages: Math.ceil(total / limit),
-      },
     });
   } catch (error) {
     console.error('Logo listesi hatası:', error);
